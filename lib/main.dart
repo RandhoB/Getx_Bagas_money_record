@@ -1,9 +1,17 @@
 import 'package:bagas_money_record/config/app_color.dart';
+import 'package:bagas_money_record/config/session.dart';
+import 'package:bagas_money_record/presentation/page/auth/login_page.dart';
+import 'package:bagas_money_record/presentation/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+import 'data/model/user.dart';
 
 void main() {
-  runApp(const MyApp());
+  initializeDateFormatting().then((value) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +32,15 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
       ),
-      home: Scaffold(),
+      home: FutureBuilder(
+        future: Session.getUser(),
+        builder: (context, AsyncSnapshot<User> snapshot) {
+          if (snapshot.data != null && snapshot.data!.idUser != null) {
+            return HomePage();
+          }
+          return LoginPage();
+        },
+      ),
     );
   }
 }
