@@ -9,7 +9,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'data/model/user.dart';
 
 void main() {
-  initializeDateFormatting().then((value) {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('id_ID').then((value) {
     runApp(const MyApp());
   });
 }
